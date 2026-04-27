@@ -34,57 +34,69 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     
+    // Ensure we use the correct column names for Supabase
+    const roomData = {
+      name: body.name,
+      size: body.size,
+      sqft: body.sqft,
+      adults: Number(body.adults),
+      children: Number(body.children),
+      bed: body.bed,
+      images: body.images || [],
+      price: Number(body.price),
+      original_price: Number(body.originalPrice || body.original_price || 0),
+      count: Number(body.count) || 1,
+      amenities: body.amenities || []
+    };
+
     const { data, error } = await supabase
       .from('rooms')
-      .insert([{
-        name: body.name,
-        size: body.size,
-        sqft: body.sqft,
-        adults: Number(body.adults),
-        children: Number(body.children),
-        bed: body.bed,
-        images: body.images || ['https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80'],
-        price: Number(body.price),
-        original_price: body.originalPrice ? Number(body.originalPrice) : null,
-        count: Number(body.count) || 1,
-        amenities: body.amenities || []
-      }])
+      .insert([roomData])
       .select()
       .single();
 
     if (error) throw error;
     return NextResponse.json(data, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Supabase error:', error);
-    return NextResponse.json({ error: 'Failed to create room' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to create room', details: error.message }, { status: 500 });
   }
 }
 
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const { id, ...updates } = body;
+    const { id } = body;
     
     if (!id) return NextResponse.json({ error: 'Room ID is required' }, { status: 400 });
 
+    // Explicitly mapping fields to ensure consistency
+    const updates = {
+      name: body.name,
+      size: body.size,
+      sqft: body.sqft,
+      adults: Number(body.adults),
+      children: Number(body.children),
+      bed: body.bed,
+      images: body.images,
+      price: Number(body.price),
+      original_price: Number(body.originalPrice || body.original_price || 0),
+      count: Number(body.count),
+      amenities: body.amenities
+    };
+
     const { data, error } = await supabase
       .from('rooms')
-      .update({
-        ...updates,
-        price: body.price ? Number(body.price) : undefined,
-        original_price: body.originalPrice ? Number(body.originalPrice) : undefined,
-        adults: body.adults ? Number(body.adults) : undefined,
-        children: body.children ? Number(body.children) : undefined,
-        count: body.count ? Number(body.count) : undefined
-      })
+      .update(updates)
       .eq('id', id)
       .select()
       .single();
 
     if (error) throw error;
     return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to update room' }, { status: 500 });
+  } catch (error: any) {
+    console.error('Update Error:', error);
+    return NextResponse.json({ error: 'Failed to update room', details: error.message }, { status: 500 });
   }
 }
 

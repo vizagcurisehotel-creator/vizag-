@@ -232,7 +232,10 @@ export default function Home() {
           <div className="reveal">
             <RoomsSection 
               rooms={rooms} 
-              setBookingRoom={setBookingRoom} 
+              setBookingRoom={(room) => {
+                if (currentUser) setBookingRoom(room);
+                else setShowAuth(true);
+              }} 
             />
           </div>
           <div className="reveal">
@@ -241,11 +244,17 @@ export default function Home() {
           <div className="reveal">
             <RestaurantSection 
               onSeeMore={() => setShowDigitalMenu(true)} 
-              onReserveTable={() => setShowTableBooking(true)}
+              onReserveTable={() => {
+                if (currentUser) setShowTableBooking(true);
+                else setShowAuth(true);
+              }}
             />
           </div>
           <div className="reveal">
-            <BanquetSection onSeeMore={() => setShowBanquetInquiry(true)} />
+            <BanquetSection onSeeMore={() => {
+              if (currentUser) setShowBanquetInquiry(true);
+              else setShowAuth(true);
+            }} />
           </div>
           <div className="reveal">
             <AttractionsSection onShowMap={() => setShowMap(true)} />
@@ -264,7 +273,10 @@ export default function Home() {
             setGlobalDates={setGlobalDates}
             guests={guests}
             setGuests={setGuests}
-            onBook={setBookingRoom}
+            onBook={(room) => {
+              if (currentUser) setBookingRoom(room);
+              else setShowAuth(true);
+            }}
             onBack={() => setView('home')}
           />
         </div>
@@ -302,8 +314,14 @@ export default function Home() {
         rooms={rooms} 
         onAction={(action) => {
           if (action === 'search') setView('search');
-          if (action === 'table') setShowTableBooking(true);
-          if (action === 'event') setShowBanquetInquiry(true);
+          if (action === 'table') {
+            if (currentUser) setShowTableBooking(true);
+            else setShowAuth(true);
+          }
+          if (action === 'event') {
+            if (currentUser) setShowBanquetInquiry(true);
+            else setShowAuth(true);
+          }
           if (action === 'map') setShowMap(true);
         }} 
       />

@@ -297,7 +297,16 @@ const AdminDashboard = () => {
 
                   {/* Photo Management */}
                   <div style={{ padding: '20px', background: 'rgba(0,0,0,0.2)', border: '1px solid var(--glass-border)' }}>
-                    <p style={{ fontSize: '0.7rem', color: 'var(--luxury-gold)', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}><ImageIcon size={14} /> Suite Gallery</p>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+                      <p style={{ fontSize: '0.7rem', color: 'var(--luxury-gold)', display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}><ImageIcon size={14} /> Suite Gallery</p>
+                      <button 
+                        type="button" 
+                        onClick={() => editingRoom ? setEditingRoom({...editingRoom, images: []}) : setNewRoom({...newRoom, images: []})}
+                        style={{ background: 'transparent', border: 'none', color: '#ff4d4d', fontSize: '0.6rem', cursor: 'pointer', textTransform: 'uppercase', letterSpacing: '1px' }}
+                      >
+                        Clear All
+                      </button>
+                    </div>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '15px' }}>
                       {(editingRoom ? editingRoom.images : newRoom.images).map((img, idx) => (
                         <div key={idx} style={{ position: 'relative' }}>
@@ -346,9 +355,9 @@ const AdminDashboard = () => {
                               const data = await res.json();
                               if (data.url) {
                                 if (editingRoom) {
-                                  setEditingRoom({...editingRoom, images: [...editingRoom.images, data.url]});
+                                  setEditingRoom({...editingRoom, images: [data.url, ...editingRoom.images]});
                                 } else {
-                                  setNewRoom({...newRoom, images: [...newRoom.images, data.url]});
+                                  setNewRoom({...newRoom, images: [data.url, ...newRoom.images]});
                                 }
                               }
                             } catch (err) {
