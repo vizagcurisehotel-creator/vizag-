@@ -44,11 +44,13 @@ const BanquetSection = ({ onSeeMore }: { onSeeMore: () => void }) => {
               <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
                 <img 
                   src="/banquet-1.png" 
+                  alt="Ballroom view 1"
                   onClick={() => setActiveImg('/banquet-1.png')}
                   style={{ width: '80px', height: '60px', objectFit: 'cover', cursor: 'pointer', border: activeImg === '/banquet-1.png' ? '2px solid var(--luxury-gold)' : '1px solid transparent', opacity: activeImg === '/banquet-1.png' ? 1 : 0.6 }}
                 />
                 <img 
                   src="/banquet-2.png" 
+                  alt="Ballroom view 2"
                   onClick={() => setActiveImg('/banquet-2.png')}
                   style={{ width: '80px', height: '60px', objectFit: 'cover', cursor: 'pointer', border: activeImg === '/banquet-2.png' ? '2px solid var(--luxury-gold)' : '1px solid transparent', opacity: activeImg === '/banquet-2.png' ? 1 : 0.6 }}
                 />

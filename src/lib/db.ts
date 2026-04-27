@@ -19,6 +19,7 @@ export interface Booking {
   room_name: string;
   guest_name: string;
   guest_email: string;
+  guest_phone?: string;
   check_in: string;
   check_out: string;
   status: 'Confirmed' | 'Pending' | 'Cancelled';
@@ -30,6 +31,7 @@ export interface TableBooking {
   id: string;
   guest_name: string;
   guest_email: string;
+  guest_phone?: string;
   date: string;
   time: string;
   guests: number;
