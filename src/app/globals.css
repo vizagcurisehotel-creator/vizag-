@@ -76,6 +76,7 @@ p {
   color: var(--luxury-gold);
   background: linear-gradient(135deg, #d4af37 0%, #f9e29c 50%, #d4af37 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
