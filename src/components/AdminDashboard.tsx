@@ -78,12 +78,27 @@ const AdminDashboard = () => {
 
   const handleSaveRoom = async (e: React.FormEvent) => {
     e.preventDefault();
-    const url = editingRoom ? '/api/rooms' : '/api/rooms';
     const method = editingRoom ? 'PUT' : 'POST';
-    const payload = editingRoom ? { ...editingRoom } : { ...newRoom };
+    
+    // Create a clean payload with correct types
+    const data = editingRoom ? { ...editingRoom } : { ...newRoom };
+    const payload = {
+      id: editingRoom?.id,
+      name: data.name,
+      size: data.size,
+      sqft: data.sqft,
+      adults: data.adults,
+      children: data.children,
+      bed: data.bed,
+      price: data.price,
+      originalPrice: (data as any).originalPrice || (data as any).original_price,
+      images: data.images,
+      count: data.count,
+      amenities: data.amenities
+    };
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch('/api/rooms', {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -92,6 +107,9 @@ const AdminDashboard = () => {
         fetchData();
         setEditingRoom(null);
         setNewRoom({ name: '', size: '', sqft: '', adults: 2, children: 2, bed: '1 King Bed', price: 0, originalPrice: 0, images: [], count: 1, amenities: [] });
+      } else {
+        const err = await response.json();
+        console.error("Save failed:", err);
       }
     } catch (error) {
       console.error("Error saving room", error);
@@ -343,6 +361,15 @@ const AdminDashboard = () => {
                             const file = e.target.files?.[0];
                             if (!file) return;
 
+                            // 1. Create an instant local preview
+                            const localPreview = URL.createObjectURL(file);
+                            
+                            if (editingRoom) {
+                              setEditingRoom(prev => prev ? ({ ...prev, images: [localPreview, ...(prev.images || [])] }) : null);
+                            } else {
+                              setNewRoom(prev => ({ ...prev, images: [localPreview, ...prev.images] }));
+                            }
+
                             setUploading(true);
                             const formData = new FormData();
                             formData.append('file', file);
@@ -353,18 +380,34 @@ const AdminDashboard = () => {
                                 body: formData
                               });
                               const data = await res.json();
+                              
                               if (data.url) {
+                                // 2. Replace the local preview with the real Supabase URL
                                 if (editingRoom) {
-                                  setEditingRoom({...editingRoom, images: [data.url, ...editingRoom.images]});
+                                  setEditingRoom(prev => {
+                                    if (!prev) return null;
+                                    const filtered = prev.images.filter(img => img !== localPreview);
+                                    return { ...prev, images: [data.url, ...filtered] };
+                                  });
                                 } else {
-                                  setNewRoom({...newRoom, images: [data.url, ...newRoom.images]});
+                                  setNewRoom(prev => {
+                                    const filtered = prev.images.filter(img => img !== localPreview);
+                                    return { ...prev, images: [data.url, ...filtered] };
+                                  });
                                 }
                               }
                             } catch (err) {
                               console.error("Upload failed", err);
-                              alert("Upload failed. Please try again.");
+                              // Remove the broken local preview on failure
+                              if (editingRoom) {
+                                setEditingRoom(prev => prev ? ({ ...prev, images: prev.images.filter(img => img !== localPreview) }) : null);
+                              } else {
+                                setNewRoom(prev => ({ ...prev, images: prev.images.filter(img => img !== localPreview) }));
+                              }
+                              alert("Upload failed. Please check your Supabase Storage settings.");
                             } finally {
                               setUploading(false);
+                              URL.revokeObjectURL(localPreview); // Clean up memory
                             }
                           }}
                         />
