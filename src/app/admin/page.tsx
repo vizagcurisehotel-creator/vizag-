@@ -32,17 +32,26 @@ export default function AdminPage() {
     );
   }
 
-  if (!session) {
+  if (!session || session.user.email !== 'vizagcurisehotel@gmail.com') {
     return (
       <div style={{ height: '100vh', background: 'var(--luxury-black)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--luxury-white)', textAlign: 'center', padding: '20px' }}>
         <Lock size={48} color="var(--luxury-gold)" style={{ marginBottom: '30px', opacity: 0.5 }} />
         <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', marginBottom: '15px' }}>Restricted <span className="gold-text">Access</span></h2>
         <p style={{ color: 'var(--luxury-pearl)', opacity: 0.6, maxWidth: '400px', marginBottom: '40px' }}>
-          The Command Center is reserved for authorized personnel. Please authenticate to proceed.
+          {session 
+            ? `Identity '${session.user.email}' is not authorized for the Command Center.`
+            : 'The Command Center is reserved for authorized personnel. Please authenticate to proceed.'}
         </p>
-        <button onClick={() => setShowAuth(true)} className="gold-btn" style={{ padding: '18px 60px' }}>
-          AUTHENTICATE
-        </button>
+        {!session && (
+          <button onClick={() => setShowAuth(true)} className="gold-btn" style={{ padding: '18px 60px' }}>
+            AUTHENTICATE
+          </button>
+        )}
+        {session && (
+          <button onClick={() => supabase.auth.signOut()} className="outline-btn" style={{ padding: '15px 40px' }}>
+            SWITCH ACCOUNT
+          </button>
+        )}
         <Link href="/" style={{ marginTop: '30px', color: 'var(--luxury-gold)', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1em' }}>
           RETURN TO VOYAGE
         </Link>
