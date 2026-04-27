@@ -26,15 +26,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/api/bookings/route.js"
     ],
-    "/api/event-inquiries/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/event-inquiries/route.js"
-    ],
     "/api/table-bookings/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/api/table-bookings/route.js"
+    ],
+    "/api/event-inquiries/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/event-inquiries/route.js"
     ],
     "/api/upload/route": [
       "static/chunks/webpack.js",

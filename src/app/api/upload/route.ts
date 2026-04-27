@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '../../../lib/supabase';
+import { supabaseAdmin } from '../../../lib/supabase';
 import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(req: NextRequest) {
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     const filename = `${uuidv4()}-${file.name.replace(/\s+/g, '-')}`;
 
     // Upload to Supabase Storage 'rooms' bucket
-    const { data, error } = await supabase.storage
+    const { data, error } = await supabaseAdmin.storage
       .from('rooms')
       .upload(filename, buffer, {
         contentType: file.type,
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Get Public URL
-    const { data: { publicUrl } } = supabase.storage
+    const { data: { publicUrl } } = supabaseAdmin.storage
       .from('rooms')
       .getPublicUrl(filename);
 

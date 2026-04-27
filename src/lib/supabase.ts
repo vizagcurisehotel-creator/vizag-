@@ -14,4 +14,9 @@ export const supabase = createClient(
   supabaseAnonKey || 'placeholder-key'
 );
 
-
+// Admin client for server-side operations (bypasses RLS)
+const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+export const supabaseAdmin = createClient(
+  supabaseUrl || 'https://placeholder-url.supabase.co',
+  serviceRoleKey || 'placeholder-key'
+);
