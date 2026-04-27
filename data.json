@@ -1,0 +1,102 @@
+{
+  "rooms": [
+    {
+      "id": "1",
+      "name": "Cozy Room",
+      "size": "11 m²",
+      "sqft": "120 ft²",
+      "adults": 2,
+      "children": 1,
+      "bed": "1 Queen Bed",
+      "images": [
+        "/uploads/1776759575632-ChatGPT-Image-Apr-21,-2026,-01_49_25-PM.png"
+      ],
+      "price": 1446,
+      "count": 5,
+      "amenities": [
+        "Air Conditioning",
+        "In-room Dining",
+        "High-Speed Wi-Fi",
+        "Mineral Water",
+        "Housekeeping",
+        "Modern Bathroom",
+        "Heater"
+      ],
+      "originalPrice": 2000
+    },
+    {
+      "id": "2",
+      "name": "Deluxe Room",
+      "size": "16 m²",
+      "sqft": "169 ft²",
+      "adults": 2,
+      "children": 2,
+      "bed": "1 Queen Bed",
+      "images": [
+        "/uploads/1776759084359-06811810-9163-46b8-8acd-4c1c039802ac.png"
+      ],
+      "price": 1807,
+      "count": 8,
+      "amenities": [
+        "City View",
+        "Air Conditioning",
+        "In-room Dining",
+        "High-Speed Wi-Fi",
+        "Mineral Water",
+        "Housekeeping",
+        "Luxury Bathroom"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Executive Room",
+      "size": "21 m²",
+      "sqft": "225 ft²",
+      "adults": 3,
+      "children": 2,
+      "bed": "1 King Bed",
+      "images": [
+        "/uploads/1776758875488-ChatGPT-Image-Apr-21,-2026,-01_29_14-PM.png"
+      ],
+      "price": 2168,
+      "count": 3,
+      "amenities": [
+        "Panoramic City View",
+        "Air Conditioning",
+        "In-room Dining",
+        "High-Speed Wi-Fi",
+        "Mineral Water",
+        "Housekeeping",
+        "Premium Bathroom",
+        "Bathtub"
+      ]
+    }
+  ],
+  "bookings": [
+    {
+      "id": "d8b3af7f-d9ab-463c-b3b5-67213287c8cc",
+      "roomId": "1",
+      "roomName": "Cozy Room",
+      "guestName": "javed",
+      "guestEmail": "javedsayed133@gmail.com",
+      "checkIn": "2026-04-21",
+      "checkOut": "2026-04-22",
+      "status": "Confirmed",
+      "totalPrice": 1446,
+      "createdAt": "2026-04-21T12:42:15.272Z"
+    }
+  ],
+  "tableBookings": [
+    {
+      "id": "b4a2567c-f004-48fd-83c6-c22135751f0b",
+      "guestName": "javedd",
+      "guestEmail": "javedsayed133@gmail.com",
+      "date": "2026-04-21",
+      "time": "19:00",
+      "guests": 2,
+      "status": "Confirmed",
+      "createdAt": "2026-04-21T07:12:21.376Z"
+    }
+  ],
+  "eventInquiries": []
+}
