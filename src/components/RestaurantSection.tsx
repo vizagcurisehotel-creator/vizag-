@@ -1,7 +1,9 @@
-"use client";
+import { useState, useEffect } from 'react';
 import { Sparkles, Utensils } from 'lucide-react';
 
 const RestaurantSection = ({ onSeeMore, onReserveTable }: { onSeeMore: () => void, onReserveTable: () => void }) => {
+  const photo = '/dine in.png';
+
   return (
     <section id="restaurant" style={{ padding: '120px 5%', background: 'var(--luxury-black)', overflow: 'hidden' }}>
       <style jsx>{`
@@ -27,7 +29,7 @@ const RestaurantSection = ({ onSeeMore, onReserveTable }: { onSeeMore: () => voi
             }} />
             <div style={{ position: 'relative', zIndex: 2, overflow: 'hidden' }}>
               <img 
-                src="/luxury-restaurant.png" 
+                src={photo} 
                 alt="Admiral's Dining" 
                 style={{ width: '100%', height: 'auto', display: 'block', transition: 'transform 1s ease' }} 
               />

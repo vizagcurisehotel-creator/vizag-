@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
 import { Play, Calendar, User, ChevronRight, ArrowDown, X } from 'lucide-react';
+import CustomDatePicker from './CustomDatePicker';
 
 const Hero = ({ onSearch, globalDates, setGlobalDates, guests, setGuests }: { onSearch: any, globalDates: any, setGlobalDates: any, guests: any, setGuests: any }) => {
   const [scrollY, setScrollY] = useState(0);
@@ -49,10 +50,10 @@ const Hero = ({ onSearch, globalDates, setGlobalDates, guests, setGuests }: { on
             width: '100%', 
             height: '100%', 
             objectFit: 'cover',
-            filter: 'contrast(1.1) brightness(0.75) saturate(1.1) sepia(0.1)' // Cinematic grading
+            filter: 'contrast(1.0) brightness(0.9) saturate(1.1)' // Clearer, highlighted video
           }}
         >
-          <source src="/Vizag_Cruise_Luxury.mp4" type="video/mp4" />
+          <source src="/hotel-tour.mp4" type="video/mp4" />
         </video>
       </div>
 
@@ -66,44 +67,45 @@ const Hero = ({ onSearch, globalDates, setGlobalDates, guests, setGuests }: { on
           display: 'flex', 
           flexDirection: 'column', 
           justifyContent: 'center', 
-          alignItems: 'center',
-          textAlign: 'center',
-          paddingBottom: '100px' // Adjusted for mobile
+          alignItems: 'flex-start',
+          textAlign: 'left',
+          paddingBottom: '100px',
+          paddingLeft: '5%' // Push to the side
         }}
       >
         <div className="reveal active hero-content" style={{ transitionDelay: '0.2s', width: '100%' }}>
           <h2 style={{ 
-            fontFamily: 'var(--font-body)', 
-            fontSize: '0.8rem', 
+            color: 'var(--luxury-gold)', 
             letterSpacing: '0.5em', 
-            color: 'var(--luxury-gold)',
-            marginBottom: '20px',
-            textTransform: 'uppercase'
+            textTransform: 'uppercase', 
+            fontSize: '0.6rem', // Smaller welcome text
+            marginBottom: '15px',
+            fontWeight: 700
           }}>
             Welcome to the Apex of Hospitality
           </h2>
           <h1 style={{ 
-            fontSize: 'clamp(2.5rem, 8vw, 5.5rem)', 
+            fontSize: 'clamp(1.4rem, 3vw, 2rem)', // Even smaller title
             fontFamily: 'var(--font-heading)',
             color: 'var(--luxury-white)',
             lineHeight: 1.1,
-            marginBottom: '30px'
+            marginBottom: '20px'
           }}>
-            THE OCEAN<br />
-            <span className="gold-text">STATEROOM</span>
+            VIZAG CRUISE<br />
+            <span className="gold-text">HOTEL</span>
           </h1>
           <p style={{ 
-            maxWidth: '650px', 
-            margin: '0 auto 40px', 
-            fontSize: '0.9rem', 
+            maxWidth: '500px', // More compact description
+            margin: '0 0 30px', 
+            fontSize: '0.8rem', // Smaller body text
             color: 'var(--luxury-pearl)',
-            opacity: 0.8,
-            lineHeight: 1.6
+            opacity: 0.7,
+            lineHeight: 1.5
           }}>
-            Experience Visakhapatnam's most iconic architectural marvel. A ship-shaped sanctuary where the horizon meets unparalleled luxury.
+            Experience Visakhapatnam's most iconic architectural marvel. A ship-shaped hotel where the horizon meets unparalleled luxury.
           </p>
           
-          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '20px', justifyContent: 'flex-start', flexWrap: 'wrap' }}>
             <button 
               className="gold-btn"
               style={{ minWidth: '200px' }}
@@ -142,22 +144,20 @@ const Hero = ({ onSearch, globalDates, setGlobalDates, guests, setGuests }: { on
           {/* Check-in */}
           <div className="booking-bar-item" style={{ flex: 1, minWidth: '200px', background: 'rgba(0,0,0,0.4)', padding: '15px 25px' }}>
             <label style={{ fontSize: '0.6rem', color: 'var(--luxury-gold)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '5px', display: 'block' }}>Arrival</label>
-            <input 
-              type="date" 
+            <CustomDatePicker 
               value={globalDates.checkIn}
-              onChange={(e) => setGlobalDates({...globalDates, checkIn: e.target.value})}
-              style={{ background: 'transparent', border: 'none', color: '#fff', fontSize: '1rem', width: '100%', outline: 'none', cursor: 'pointer' }}
+              onChange={(val: string) => setGlobalDates({...globalDates, checkIn: val})}
+              direction="up"
             />
           </div>
 
           {/* Check-out */}
           <div className="booking-bar-item" style={{ flex: 1, minWidth: '200px', background: 'rgba(0,0,0,0.4)', padding: '15px 25px' }}>
             <label style={{ fontSize: '0.6rem', color: 'var(--luxury-gold)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '5px', display: 'block' }}>Departure</label>
-            <input 
-              type="date" 
+            <CustomDatePicker 
               value={globalDates.checkOut}
-              onChange={(e) => setGlobalDates({...globalDates, checkOut: e.target.value})}
-              style={{ background: 'transparent', border: 'none', color: '#fff', fontSize: '1rem', width: '100%', outline: 'none', cursor: 'pointer' }}
+              onChange={(val: string) => setGlobalDates({...globalDates, checkOut: val})}
+              direction="up"
             />
           </div>
 
@@ -200,7 +200,7 @@ const Hero = ({ onSearch, globalDates, setGlobalDates, guests, setGuests }: { on
               boxShadow: '0 0 50px rgba(212, 175, 55, 0.2)'
             }}
           >
-            <source src="/Vizag_Cruise_Luxury.mp4" type="video/mp4" />
+            <source src="/hotel-tour.mp4" type="video/mp4" />
           </video>
         </div>
       )}

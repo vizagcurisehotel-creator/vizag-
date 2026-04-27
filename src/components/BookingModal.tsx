@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import CustomDatePicker from './CustomDatePicker';
 import { X, Calendar, User, Mail, Sparkles, ArrowLeft } from 'lucide-react';
 import { Room } from '../lib/db';
 
@@ -14,6 +15,7 @@ const BookingModal = ({ room, initialDates, onClose, onSuccess }: BookingModalPr
   const [formData, setFormData] = useState({
     guestName: '',
     guestEmail: '',
+    guestPhone: '',
     checkIn: initialDates.checkIn,
     checkOut: initialDates.checkOut
   });
@@ -24,7 +26,7 @@ const BookingModal = ({ room, initialDates, onClose, onSuccess }: BookingModalPr
     e.preventDefault();
     setError('');
 
-    if (!formData.guestName || !formData.guestEmail || !formData.checkIn || !formData.checkOut) {
+    if (!formData.guestName || !formData.guestEmail || !formData.guestPhone || !formData.checkIn || !formData.checkOut) {
       setError('Please provide all details for your stateroom.');
       return;
     }
@@ -96,15 +98,28 @@ const BookingModal = ({ room, initialDates, onClose, onSuccess }: BookingModalPr
           {error && <div style={{ color: '#ff4d4d', fontSize: '0.8rem', marginBottom: '20px', textAlign: 'center' }}>{error}</div>}
           
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
-            <div style={{ borderBottom: '1px solid rgba(212, 175, 55, 0.3)', paddingBottom: '10px' }}>
-              <label style={{ display: 'block', fontSize: '0.6rem', color: 'var(--luxury-gold)', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '10px' }}>Guest Name</label>
-              <input 
-                type="text" 
-                value={formData.guestName} 
-                onChange={e => setFormData({...formData, guestName: e.target.value})} 
-                style={{ width: '100%', background: 'transparent', border: 'none', color: 'var(--luxury-white)', fontSize: '1rem', outline: 'none' }} 
-                placeholder="Name for the voyage" 
-              />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <div style={{ borderBottom: '1px solid rgba(212, 175, 55, 0.3)', paddingBottom: '10px' }}>
+                <label style={{ display: 'block', fontSize: '0.6rem', color: 'var(--luxury-gold)', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '10px' }}>Guest Name</label>
+                <input 
+                  type="text" 
+                  value={formData.guestName} 
+                  onChange={e => setFormData({...formData, guestName: e.target.value})} 
+                  style={{ width: '100%', background: 'transparent', border: 'none', color: 'var(--luxury-white)', fontSize: '1rem', outline: 'none' }} 
+                  placeholder="Name" 
+                />
+              </div>
+
+              <div style={{ borderBottom: '1px solid rgba(212, 175, 55, 0.3)', paddingBottom: '10px' }}>
+                <label style={{ display: 'block', fontSize: '0.6rem', color: 'var(--luxury-gold)', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '10px' }}>Phone Number</label>
+                <input 
+                  type="tel" 
+                  value={formData.guestPhone} 
+                  onChange={e => setFormData({...formData, guestPhone: e.target.value})} 
+                  style={{ width: '100%', background: 'transparent', border: 'none', color: 'var(--luxury-white)', fontSize: '1rem', outline: 'none' }} 
+                  placeholder="Contact Number" 
+                />
+              </div>
             </div>
 
             <div style={{ borderBottom: '1px solid rgba(212, 175, 55, 0.3)', paddingBottom: '10px' }}>
@@ -114,18 +129,26 @@ const BookingModal = ({ room, initialDates, onClose, onSuccess }: BookingModalPr
                 value={formData.guestEmail} 
                 onChange={e => setFormData({...formData, guestEmail: e.target.value})} 
                 style={{ width: '100%', background: 'transparent', border: 'none', color: 'var(--luxury-white)', fontSize: '1rem', outline: 'none' }} 
-                placeholder="For your confirmation" 
+                placeholder="For confirmation" 
               />
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
               <div style={{ borderBottom: '1px solid rgba(212, 175, 55, 0.3)', paddingBottom: '10px' }}>
                 <label style={{ display: 'block', fontSize: '0.6rem', color: 'var(--luxury-gold)', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '10px' }}>Arrival</label>
-                <input type="date" value={formData.checkIn} onChange={e => setFormData({...formData, checkIn: e.target.value})} style={{ width: '100%', background: 'transparent', border: 'none', color: 'var(--luxury-white)', cursor: 'pointer', outline: 'none' }} />
+                <CustomDatePicker 
+                  value={formData.checkIn}
+                  onChange={(val) => setFormData({...formData, checkIn: val})}
+                  label="Arrival"
+                />
               </div>
               <div style={{ borderBottom: '1px solid rgba(212, 175, 55, 0.3)', paddingBottom: '10px' }}>
                 <label style={{ display: 'block', fontSize: '0.6rem', color: 'var(--luxury-gold)', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '10px' }}>Departure</label>
-                <input type="date" value={formData.checkOut} onChange={e => setFormData({...formData, checkOut: e.target.value})} style={{ width: '100%', background: 'transparent', border: 'none', color: 'var(--luxury-white)', cursor: 'pointer', outline: 'none' }} />
+                <CustomDatePicker 
+                  value={formData.checkOut}
+                  onChange={(val) => setFormData({...formData, checkOut: val})}
+                  label="Departure"
+                />
               </div>
             </div>
 

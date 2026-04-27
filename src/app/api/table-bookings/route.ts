@@ -20,6 +20,7 @@ export async function POST(request: Request) {
       .insert([{
         guest_name: body.guestName,
         guest_email: body.guestEmail,
+        guest_phone: body.guestPhone,
         date: body.date,
         time: body.time,
         guests: body.guests,

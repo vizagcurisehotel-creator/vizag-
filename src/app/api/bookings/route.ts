@@ -45,6 +45,7 @@ export async function POST(request: Request) {
         room_name: room.name,
         guest_name: body.guestName,
         guest_email: body.guestEmail,
+        guest_phone: body.guestPhone,
         check_in: body.checkIn,
         check_out: body.checkOut,
         status: 'Confirmed',

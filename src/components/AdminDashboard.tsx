@@ -15,7 +15,9 @@ const GALLERY_IMAGES = [
 ];
 
 const AdminDashboard = () => {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'rooms' | 'bookings' | 'dining' | 'events'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'rooms' | 'bookings' | 'dining' | 'events' | 'settings' | 'customers'>('dashboard');
+  const [restaurantPhoto, setRestaurantPhoto] = useState('/restaurant-main.png');
+  const [customers, setCustomers] = useState<any[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [tableBookings, setTableBookings] = useState<any[]>([]);
@@ -42,17 +44,21 @@ const AdminDashboard = () => {
     setLoading(true);
     try {
       console.log("Fetching latest data from Supabase...");
-      const [roomsRes, bookingsRes, tableBookingsRes, eventInquiriesRes] = await Promise.all([
+      const [roomsRes, bookingsRes, tableBookingsRes, eventInquiriesRes, settingsRes, customersRes] = await Promise.all([
         fetch('/api/rooms', { cache: 'no-store' }),
         fetch('/api/bookings', { cache: 'no-store' }),
         fetch('/api/table-bookings', { cache: 'no-store' }),
-        fetch('/api/event-inquiries', { cache: 'no-store' })
+        fetch('/api/event-inquiries', { cache: 'no-store' }),
+        fetch('/api/restaurant', { cache: 'no-store' }),
+        fetch('/api/customers', { cache: 'no-store' })
       ]);
 
       const roomsData = await roomsRes.json();
       const bookingsData = await bookingsRes.json();
       const tableBookingsData = await tableBookingsRes.json();
       const eventInquiriesData = await eventInquiriesRes.json();
+      const settingsData = await settingsRes.json();
+      const customersData = await customersRes.json();
       
       if (roomsRes.ok && Array.isArray(roomsData)) {
         console.log("Rooms loaded successfully:", roomsData.length);
@@ -64,6 +70,8 @@ const AdminDashboard = () => {
       if (bookingsRes.ok && Array.isArray(bookingsData)) setBookings(bookingsData);
       if (tableBookingsRes.ok && Array.isArray(tableBookingsData)) setTableBookings(tableBookingsData);
       if (eventInquiriesRes.ok && Array.isArray(eventInquiriesData)) setEventInquiries(eventInquiriesData);
+      if (customersRes.ok && Array.isArray(customersData)) setCustomers(customersData);
+      if (settingsData && settingsData.value) setRestaurantPhoto(settingsData.value);
     } catch (error) {
       console.error("CRITICAL: Failed to fetch admin data", error);
     } finally {
@@ -179,7 +187,7 @@ const AdminDashboard = () => {
         </div>
         
         <div className="tabs-container" style={{ display: 'flex', gap: '10px', background: 'rgba(255,255,255,0.05)', padding: '6px', borderRadius: '2px', border: '1px solid var(--glass-border)' }}>
-          {(['dashboard', 'rooms', 'bookings', 'dining', 'events'] as const).map((tab) => (
+          {(['dashboard', 'rooms', 'bookings', 'dining', 'events', 'customers', 'settings'] as const).map((tab) => (
             <button 
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -448,6 +456,7 @@ const AdminDashboard = () => {
                   <thead>
                     <tr style={{ borderBottom: '1px solid var(--glass-border)', color: 'var(--luxury-pearl)', opacity: 0.5, textTransform: 'uppercase', fontSize: '0.65rem', letterSpacing: '2px' }}>
                       <th style={{ padding: '20px' }}>Guest Identity</th>
+                      <th style={{ padding: '20px' }}>Phone</th>
                       <th style={{ padding: '20px' }}>Sanctuary</th>
                       <th style={{ padding: '20px' }}>Voyage Window</th>
                       <th style={{ padding: '20px' }}>Gross Revenue</th>
@@ -466,6 +475,7 @@ const AdminDashboard = () => {
                             <div style={{ fontWeight: 600, color: 'var(--luxury-white)', fontSize: '1rem' }}>{booking.guest_name}</div>
                             <div style={{ fontSize: '0.75rem', color: 'var(--luxury-pearl)', opacity: 0.5 }}>{booking.guest_email}</div>
                           </td>
+                          <td style={{ padding: '20px', color: 'var(--luxury-gold)' }}>{booking.guest_phone || 'N/A'}</td>
                           <td style={{ padding: '20px', color: 'var(--luxury-pearl)' }}>{booking.room_name}</td>
                           <td style={{ padding: '20px', color: 'var(--luxury-white)' }}>
                             <div style={{ fontSize: '0.9rem' }}>{new Date(booking.check_in).toLocaleDateString()} — {new Date(booking.check_out).toLocaleDateString()}</div>
@@ -493,6 +503,7 @@ const AdminDashboard = () => {
                   <thead>
                     <tr style={{ borderBottom: '1px solid var(--glass-border)', color: 'var(--luxury-pearl)', opacity: 0.5, textTransform: 'uppercase', fontSize: '0.65rem', letterSpacing: '2px' }}>
                       <th style={{ padding: '20px' }}>Guest Identity</th>
+                      <th style={{ padding: '20px' }}>Phone</th>
                       <th style={{ padding: '20px' }}>Party Size</th>
                       <th style={{ padding: '20px' }}>Reservation Window</th>
                       <th style={{ padding: '20px' }}>Status</th>
@@ -511,6 +522,7 @@ const AdminDashboard = () => {
                             <div style={{ fontWeight: 600, color: 'var(--luxury-white)', fontSize: '1rem' }}>{booking.guest_name}</div>
                             <div style={{ fontSize: '0.75rem', color: 'var(--luxury-pearl)', opacity: 0.5 }}>{booking.guest_email}</div>
                           </td>
+                          <td style={{ padding: '20px', color: 'var(--luxury-gold)' }}>{booking.guest_phone || 'N/A'}</td>
                           <td style={{ padding: '20px', color: 'var(--luxury-gold)', fontWeight: 700 }}>{booking.guests} Guests</td>
                           <td style={{ padding: '20px', color: 'var(--luxury-white)' }}>
                             <div style={{ fontSize: '0.9rem' }}>{new Date(booking.date).toLocaleDateString()} @ {booking.time}</div>
@@ -545,6 +557,7 @@ const AdminDashboard = () => {
                   <thead>
                     <tr style={{ borderBottom: '1px solid var(--glass-border)', color: 'var(--luxury-pearl)', opacity: 0.5, textTransform: 'uppercase', fontSize: '0.65rem', letterSpacing: '2px' }}>
                       <th style={{ padding: '20px' }}>Lead Identity</th>
+                      <th style={{ padding: '20px' }}>Phone</th>
                       <th style={{ padding: '20px' }}>Event Profile</th>
                       <th style={{ padding: '20px' }}>Guest Forecast</th>
                       <th style={{ padding: '20px' }}>Preferred Date</th>
@@ -563,6 +576,7 @@ const AdminDashboard = () => {
                             <div style={{ fontWeight: 600, color: 'var(--luxury-white)', fontSize: '1rem' }}>{inquiry.name}</div>
                             <div style={{ fontSize: '0.75rem', color: 'var(--luxury-pearl)', opacity: 0.5 }}>{inquiry.email}</div>
                           </td>
+                          <td style={{ padding: '20px', color: 'var(--luxury-gold)' }}>{inquiry.phone || 'N/A'}</td>
                           <td style={{ padding: '20px', color: 'var(--luxury-pearl)' }}>
                             <span style={{ padding: '4px 10px', background: 'rgba(212, 175, 55, 0.1)', border: '1px solid var(--luxury-gold-muted)', color: 'var(--luxury-gold)', fontSize: '0.7rem', textTransform: 'uppercase' }}>
                               {inquiry.event_type}
@@ -586,6 +600,92 @@ const AdminDashboard = () => {
                   </tbody>
                 </table>
               </div>
+            </div>
+          )}
+
+          {activeTab === 'settings' && (
+            <div className="reveal active" style={{ maxWidth: '800px' }}>
+              <h2 style={{ fontSize: '1.8rem', color: 'var(--luxury-gold)', marginBottom: '30px', fontFamily: 'var(--font-heading)' }}>Site Settings</h2>
+              
+              <div style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid var(--glass-border)', padding: '30px' }}>
+                <h3 style={{ fontSize: '1rem', color: 'var(--luxury-white)', marginBottom: '20px' }}>Restaurant Branding</h3>
+                <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+                  <img 
+                    src={restaurantPhoto} 
+                    alt="Current Restaurant" 
+                    style={{ width: '200px', height: '150px', objectFit: 'cover', border: '1px solid var(--luxury-gold)' }} 
+                  />
+                  <div>
+                    <input 
+                      type="file" 
+                      id="restaurant-upload" 
+                      style={{ display: 'none' }} 
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        const formData = new FormData();
+                        formData.append('file', file);
+                        try {
+                          const res = await fetch('/api/upload', { method: 'POST', body: formData });
+                          const data = await res.json();
+                          if (data.url) {
+                            await fetch('/api/restaurant', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ url: data.url })
+                            });
+                            setRestaurantPhoto(data.url);
+                            alert("Restaurant photo updated successfully!");
+                          }
+                        } catch (err) {
+                          console.error(err);
+                        }
+                      }}
+                    />
+                    <label htmlFor="restaurant-upload" className="gold-btn" style={{ cursor: 'pointer', display: 'inline-block', padding: '12px 20px' }}>
+                      Upload New Restaurant Photo
+                    </label>
+                    <p style={{ color: 'var(--luxury-pearl)', opacity: 0.6, fontSize: '0.8rem', marginTop: '10px' }}>
+                      Recommended size: 1200 x 800 pixels (JPG or PNG)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'customers' && (
+            <div className="reveal active">
+              <h2 style={{ fontSize: '1.8rem', color: 'var(--luxury-gold)', marginBottom: '30px', fontFamily: 'var(--font-heading)' }}>Registered Customers</h2>
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ color: 'var(--luxury-gold)', textTransform: 'uppercase', fontSize: '0.7rem', borderBottom: '1px solid var(--glass-border)' }}>
+                    <th style={{ textAlign: 'left', padding: '15px' }}>Name</th>
+                    <th style={{ textAlign: 'left', padding: '15px' }}>Email</th>
+                    <th style={{ textAlign: 'left', padding: '15px' }}>Phone</th>
+                    <th style={{ textAlign: 'left', padding: '15px' }}>Joined Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {customers.map((customer) => (
+                    <tr key={customer.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                      <td style={{ padding: '15px', color: 'var(--luxury-white)' }}>{customer.full_name || customer.name || 'Anonymous'}</td>
+                      <td style={{ padding: '15px', color: 'var(--luxury-pearl)', opacity: 0.8 }}>{customer.email}</td>
+                      <td style={{ padding: '15px', color: 'var(--luxury-gold)', fontWeight: 600 }}>{customer.phone || 'N/A'}</td>
+                      <td style={{ padding: '15px', color: 'var(--luxury-pearl)', opacity: 0.6 }}>
+                        {new Date(customer.created_at).toLocaleDateString()}
+                      </td>
+                    </tr>
+                  ))}
+                  {customers.length === 0 && (
+                    <tr>
+                      <td colSpan={4} style={{ padding: '40px', textAlign: 'center', color: 'var(--luxury-pearl)', opacity: 0.5 }}>
+                        No customers registered yet.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
           )}
         </div>

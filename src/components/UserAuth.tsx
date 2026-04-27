@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Mail, Lock, User, ArrowRight, Shield, Loader2 } from 'lucide-react';
+import { X, Mail, Lock, User, ArrowRight, Shield, Loader2, Phone } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface UserAuthProps {
@@ -11,7 +11,7 @@ const UserAuth = ({ onClose, onLogin }: UserAuthProps) => {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', phone: '' });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,6 +37,7 @@ const UserAuth = ({ onClose, onLogin }: UserAuthProps) => {
           options: {
             data: {
               name: formData.name,
+              phone: formData.phone,
             },
           },
         });
@@ -46,6 +47,7 @@ const UserAuth = ({ onClose, onLogin }: UserAuthProps) => {
             id: data.user.id,
             email: data.user.email,
             name: formData.name,
+            phone: formData.phone,
           });
         } else {
           setError('Verification email sent. Please check your inbox.');
@@ -87,20 +89,37 @@ const UserAuth = ({ onClose, onLogin }: UserAuthProps) => {
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
             {!isLogin && (
-              <div style={{ borderBottom: '1px solid rgba(212, 175, 55, 0.3)', paddingBottom: '8px' }}>
-                <label style={{ display: 'block', fontSize: '0.6rem', color: 'var(--luxury-gold)', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '8px' }}>Full Name</label>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                  <User size={18} color="var(--luxury-gold)" opacity={0.5} />
-                  <input 
-                    type="text" 
-                    placeholder="E.g. Alexander Pierce" 
-                    required 
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    style={{ width: '100%', background: 'transparent', border: 'none', color: 'var(--luxury-white)', outline: 'none' }} 
-                  />
+              <>
+                <div style={{ borderBottom: '1px solid rgba(212, 175, 55, 0.3)', paddingBottom: '8px' }}>
+                  <label style={{ display: 'block', fontSize: '0.6rem', color: 'var(--luxury-gold)', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '8px' }}>Full Name</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <User size={18} color="var(--luxury-gold)" opacity={0.5} />
+                    <input 
+                      type="text" 
+                      placeholder="E.g. Alexander Pierce" 
+                      required 
+                      value={formData.name}
+                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      style={{ width: '100%', background: 'transparent', border: 'none', color: 'var(--luxury-white)', outline: 'none' }} 
+                    />
+                  </div>
                 </div>
-              </div>
+
+                <div style={{ borderBottom: '1px solid rgba(212, 175, 55, 0.3)', paddingBottom: '8px' }}>
+                  <label style={{ display: 'block', fontSize: '0.6rem', color: 'var(--luxury-gold)', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '8px' }}>Phone Number</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <Phone size={18} color="var(--luxury-gold)" opacity={0.5} />
+                    <input 
+                      type="tel" 
+                      placeholder="+91 00000 00000" 
+                      required 
+                      value={formData.phone}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      style={{ width: '100%', background: 'transparent', border: 'none', color: 'var(--luxury-white)', outline: 'none' }} 
+                    />
+                  </div>
+                </div>
+              </>
             )}
             
             <div style={{ borderBottom: '1px solid rgba(212, 175, 55, 0.3)', paddingBottom: '8px' }}>

@@ -41,17 +41,17 @@ const BanquetInquiryModal = ({ onClose }: { onClose: () => void }) => {
       <div className="glass reveal active" style={{ width: '100%', maxWidth: '900px', background: 'var(--luxury-black)', border: '1px solid var(--luxury-gold)', position: 'relative', overflow: 'hidden', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))' }}>
         
         {/* Decorative Side */}
-        <div style={{ position: 'relative', height: '100%', minHeight: '400px', background: 'url(/luxury-ballroom.png) center/cover' }}>
+        <div style={{ position: 'relative', height: '100%', minHeight: '400px', background: 'url(/banquet-1.png) center/cover' }}>
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, var(--luxury-black) 0%, rgba(0,0,0,0.4) 100%)' }} />
           <div style={{ position: 'absolute', bottom: '40px', left: '40px', right: '40px' }}>
-            <div style={{ color: 'var(--luxury-gold)', fontSize: '0.7rem', letterSpacing: '0.4em', textTransform: 'uppercase', marginBottom: '15px' }}>Bespose Celebrations</div>
+            <div style={{ color: 'var(--luxury-gold)', fontSize: '0.7rem', letterSpacing: '0.4em', textTransform: 'uppercase', marginBottom: '15px' }}>Bespoke Celebrations</div>
             <h2 style={{ fontSize: '2.5rem', fontFamily: 'var(--font-heading)', color: '#fff', marginBottom: '15px' }}>The Grand <span className="gold-text">Ballroom</span></h2>
             <p style={{ color: 'var(--luxury-pearl)', opacity: 0.8, fontSize: '0.9rem', lineHeight: 1.6 }}>Our event curators will transform your vision into a legendary reality.</p>
           </div>
         </div>
 
         {/* Form Side */}
-        <div style={{ padding: '50px' }}>
+        <div style={{ padding: '50px', overflowY: 'auto', maxHeight: '90vh' }}>
           <button onClick={onClose} style={{ position: 'absolute', top: '20px', right: '20px', background: 'transparent', border: 'none', color: 'var(--luxury-pearl)', cursor: 'pointer' }}>
             <X size={24} />
           </button>
@@ -94,15 +94,27 @@ const BanquetInquiryModal = ({ onClose }: { onClose: () => void }) => {
                 </div>
               </div>
 
-              <div style={{ borderBottom: '1px solid var(--glass-border)', paddingBottom: '5px' }}>
-                <label style={{ fontSize: '0.6rem', color: 'var(--luxury-gold)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Email Address</label>
-                <input 
-                  required 
-                  type="email" 
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  style={{ width: '100%', background: 'transparent', border: 'none', color: '#fff', padding: '8px 0', outline: 'none' }} 
-                />
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+                <div style={{ borderBottom: '1px solid var(--glass-border)', paddingBottom: '5px' }}>
+                  <label style={{ fontSize: '0.6rem', color: 'var(--luxury-gold)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Email Address</label>
+                  <input 
+                    required 
+                    type="email" 
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    style={{ width: '100%', background: 'transparent', border: 'none', color: '#fff', padding: '8px 0', outline: 'none' }} 
+                  />
+                </div>
+                <div style={{ borderBottom: '1px solid var(--glass-border)', paddingBottom: '5px' }}>
+                  <label style={{ fontSize: '0.6rem', color: 'var(--luxury-gold)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Phone Number</label>
+                  <input 
+                    required 
+                    type="tel" 
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    style={{ width: '100%', background: 'transparent', border: 'none', color: '#fff', padding: '8px 0', outline: 'none' }} 
+                  />
+                </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
