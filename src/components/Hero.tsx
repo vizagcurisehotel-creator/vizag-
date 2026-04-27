@@ -6,12 +6,23 @@ import CustomDatePicker from './CustomDatePicker';
 const Hero = ({ onSearch, globalDates, setGlobalDates, guests, setGuests }: { onSearch: any, globalDates: any, setGlobalDates: any, guests: any, setGuests: any }) => {
   const [scrollY, setScrollY] = useState(0);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [isGuestsOpen, setIsGuestsOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const guestsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
+    const handleClickOutside = (e: MouseEvent) => {
+      if (guestsRef.current && !guestsRef.current.contains(e.target as Node)) {
+        setIsGuestsOpen(false);
+      }
+    };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   return (
@@ -162,11 +173,82 @@ const Hero = ({ onSearch, globalDates, setGlobalDates, guests, setGuests }: { on
           </div>
 
           {/* Guests */}
-          <div className="booking-bar-item" style={{ flex: 1, minWidth: '200px', background: 'rgba(0,0,0,0.4)', padding: '15px 25px' }}>
+          <div 
+            ref={guestsRef}
+            className="booking-bar-item" 
+            style={{ flex: 1, minWidth: '200px', background: 'rgba(0,0,0,0.4)', padding: '15px 25px', position: 'relative', cursor: 'pointer' }}
+            onClick={() => setIsGuestsOpen(!isGuestsOpen)}
+          >
             <label style={{ fontSize: '0.6rem', color: 'var(--luxury-gold)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '5px', display: 'block' }}>Guests</label>
-            <div style={{ color: '#fff', fontSize: '1rem', cursor: 'pointer' }}>
+            <div style={{ color: '#fff', fontSize: '0.9rem', fontWeight: 600 }}>
               {guests.adults} Adults, {guests.children} Children
             </div>
+
+            {/* Guest Popover */}
+            {isGuestsOpen && (
+              <div 
+                onClick={(e) => e.stopPropagation()}
+                className="glass"
+                style={{ 
+                  position: 'absolute', 
+                  bottom: '100%', 
+                  left: 0, 
+                  width: '300px', 
+                  padding: '30px', 
+                  zIndex: 100, 
+                  marginBottom: '20px', 
+                  border: '1px solid var(--luxury-gold)',
+                  boxShadow: '0 -25px 50px rgba(0,0,0,0.7)',
+                  animation: 'fadeInUp 0.3s ease'
+                }}
+              >
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--luxury-white)', letterSpacing: '0.1em', fontWeight: 700 }}>ADULTS</div>
+                      <div style={{ fontSize: '0.6rem', color: 'var(--luxury-pearl)', opacity: 0.5 }}>Ages 13+</div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                      <button 
+                        onClick={() => setGuests({...guests, adults: Math.max(1, guests.adults - 1)})}
+                        style={{ width: '30px', height: '30px', background: 'transparent', border: '1px solid var(--luxury-gold)', color: 'var(--luxury-gold)', cursor: 'pointer' }}
+                      >-</button>
+                      <span style={{ color: 'var(--luxury-white)', minWidth: '20px', textAlign: 'center' }}>{guests.adults}</span>
+                      <button 
+                        onClick={() => setGuests({...guests, adults: guests.adults + 1})}
+                        style={{ width: '30px', height: '30px', background: 'transparent', border: '1px solid var(--luxury-gold)', color: 'var(--luxury-gold)', cursor: 'pointer' }}
+                      >+</button>
+                    </div>
+                  </div>
+                  
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--luxury-white)', letterSpacing: '0.1em', fontWeight: 700 }}>CHILDREN</div>
+                      <div style={{ fontSize: '0.6rem', color: 'var(--luxury-pearl)', opacity: 0.5 }}>Ages 0-12</div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                      <button 
+                        onClick={() => setGuests({...guests, children: Math.max(0, guests.children - 1)})}
+                        style={{ width: '30px', height: '30px', background: 'transparent', border: '1px solid var(--luxury-gold)', color: 'var(--luxury-gold)', cursor: 'pointer' }}
+                      >-</button>
+                      <span style={{ color: 'var(--luxury-white)', minWidth: '20px', textAlign: 'center' }}>{guests.children}</span>
+                      <button 
+                        onClick={() => setGuests({...guests, children: guests.children + 1})}
+                        style={{ width: '30px', height: '30px', background: 'transparent', border: '1px solid var(--luxury-gold)', color: 'var(--luxury-gold)', cursor: 'pointer' }}
+                      >+</button>
+                    </div>
+                  </div>
+
+                  <button 
+                    onClick={() => setIsGuestsOpen(false)} 
+                    className="gold-btn" 
+                    style={{ width: '100%', padding: '12px', fontSize: '0.7rem' }}
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           <button 

@@ -38,8 +38,10 @@ const CustomDatePicker = ({ value, onChange, label, direction = 'down' }: Custom
   };
 
   const handleDateSelect = (day: number) => {
-    const selectedDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
-    onChange(selectedDate.toISOString().split('T')[0]);
+    const y = currentMonth.getFullYear();
+    const m = String(currentMonth.getMonth() + 1).padStart(2, '0');
+    const d = String(day).padStart(2, '0');
+    onChange(`${y}-${m}-${d}`);
     setIsOpen(false);
   };
 
