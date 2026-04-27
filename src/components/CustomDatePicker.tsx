@@ -5,7 +5,7 @@ import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-reac
 interface CustomDatePickerProps {
   value: string;
   onChange: (date: string) => void;
-  label: string;
+  label?: string;
   direction?: 'up' | 'down';
 }
 
