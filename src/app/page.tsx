@@ -98,7 +98,7 @@ export default function Home() {
     });
 
     // 3. Fetch Rooms
-    fetch('/api/rooms')
+    fetch('/api/rooms', { cache: 'no-store' })
       .then(res => {
         if (!res.ok) throw new Error('API failed');
         return res.json();

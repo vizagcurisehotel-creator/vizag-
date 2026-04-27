@@ -43,10 +43,10 @@ const AdminDashboard = () => {
     try {
       console.log("Fetching latest data from Supabase...");
       const [roomsRes, bookingsRes, tableBookingsRes, eventInquiriesRes] = await Promise.all([
-        fetch('/api/rooms'),
-        fetch('/api/bookings'),
-        fetch('/api/table-bookings'),
-        fetch('/api/event-inquiries')
+        fetch('/api/rooms', { cache: 'no-store' }),
+        fetch('/api/bookings', { cache: 'no-store' }),
+        fetch('/api/table-bookings', { cache: 'no-store' }),
+        fetch('/api/event-inquiries', { cache: 'no-store' })
       ]);
 
       const roomsData = await roomsRes.json();

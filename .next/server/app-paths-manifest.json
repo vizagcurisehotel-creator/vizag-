@@ -1,8 +1,4 @@
 {
-  "/api/bookings/route": "app/api/bookings/route.js",
-  "/api/event-inquiries/route": "app/api/event-inquiries/route.js",
-  "/api/rooms/route": "app/api/rooms/route.js",
-  "/api/table-bookings/route": "app/api/table-bookings/route.js",
   "/admin/page": "app/admin/page.js",
   "/page": "app/page.js"
 }

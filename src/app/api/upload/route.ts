@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { supabase } from '../../../lib/supabase';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,23 +11,30 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const filename = `${uuidv4()}-${file.name.replace(/\s+/g, '-')}`;
 
-    // Create a unique filename
-    const filename = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-    
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+    // Upload to Supabase Storage 'rooms' bucket
+    const { data, error } = await supabase.storage
+      .from('rooms')
+      .upload(filename, buffer, {
+        contentType: file.type,
+        upsert: true
+      });
+
+    if (error) {
+      console.error('Supabase storage error:', error);
+      return NextResponse.json({ error: 'Failed to upload to Supabase' }, { status: 500 });
     }
 
-    const filePath = path.join(uploadDir, filename);
-    fs.writeFileSync(filePath, buffer);
+    // Get Public URL
+    const { data: { publicUrl } } = supabase.storage
+      .from('rooms')
+      .getPublicUrl(filename);
 
     return NextResponse.json({ 
       success: true, 
-      url: `/uploads/${filename}` 
+      url: publicUrl 
     });
   } catch (error) {
     console.error('Upload error:', error);
