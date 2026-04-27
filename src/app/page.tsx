@@ -232,7 +232,7 @@ export default function Home() {
           <div className="reveal">
             <RoomsSection 
               rooms={rooms} 
-              setBookingRoom={(room) => {
+              setBookingRoom={(room: Room) => {
                 if (currentUser) setBookingRoom(room);
                 else setShowAuth(true);
               }} 
@@ -273,7 +273,7 @@ export default function Home() {
             setGlobalDates={setGlobalDates}
             guests={guests}
             setGuests={setGuests}
-            onBook={(room) => {
+            onBook={(room: Room) => {
               if (currentUser) setBookingRoom(room);
               else setShowAuth(true);
             }}
@@ -312,7 +312,7 @@ export default function Home() {
 
       <ConciergeBot 
         rooms={rooms} 
-        onAction={(action) => {
+        onAction={(action: string) => {
           if (action === 'search') setView('search');
           if (action === 'table') {
             if (currentUser) setShowTableBooking(true);
