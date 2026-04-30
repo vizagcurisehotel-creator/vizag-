@@ -63,8 +63,7 @@ const Hero = ({ onSearch, globalDates, setGlobalDates, guests, setGuests }: { on
             filter: 'contrast(1.0) brightness(0.9) saturate(1.1)' // Clearer, highlighted video
           }}
         >
-          <source src="/hotel-tour.MOV" type="video/quicktime" />
-          <source src="/hotel-tour.MOV" type="video/mp4" />
+          <source src="/hotel-tour.mp4" type="video/mp4" />
         </video>
       </div>
 
@@ -282,8 +281,7 @@ const Hero = ({ onSearch, globalDates, setGlobalDates, guests, setGuests }: { on
               boxShadow: '0 0 50px rgba(212, 175, 55, 0.2)'
             }}
           >
-            <source src="/hotel-tour.MOV" type="video/quicktime" />
-            <source src="/hotel-tour.MOV" type="video/mp4" />
+            <source src="/hotel-tour.mp4" type="video/mp4" />
           </video>
         </div>
       )}

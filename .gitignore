@@ -23,4 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 public/*.MOV
-public/*.mp4
+public/*.mp4.next 
