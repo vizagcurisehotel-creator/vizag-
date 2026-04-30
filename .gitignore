@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 public/*.MOV
 public/*.mp4.next 
+.next
+node_modules
+.env
