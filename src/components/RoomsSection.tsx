@@ -62,13 +62,8 @@ const RoomCard = ({ room, setBookingRoom }: { room: Room, setBookingRoom: any })
             )}
           </div>
           <div className="room-price" style={{ textAlign: 'right', minWidth: '120px' }}>
-            {room.original_price && room.original_price > room.price && (
-              <div style={{ color: 'var(--luxury-pearl)', opacity: 0.4, fontSize: '0.9rem', textDecoration: 'line-through', marginBottom: '2px' }}>
-                ₹{room.original_price.toLocaleString()}
-              </div>
-            )}
-            <div style={{ color: 'var(--luxury-gold)', fontSize: '1.5rem', fontFamily: 'var(--font-heading)' }}>₹{room.price.toLocaleString()}</div>
-            <div style={{ fontSize: '0.6rem', color: 'var(--luxury-pearl)', opacity: 0.6, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Per Enchanted Night</div>
+            <div style={{ color: 'var(--luxury-gold)', fontSize: '1rem', fontFamily: 'var(--font-heading)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Inquiry Only</div>
+            <div style={{ fontSize: '0.6rem', color: 'var(--luxury-pearl)', opacity: 0.6, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Bespoke Experience</div>
           </div>
         </div>
         <div style={{ marginTop: '30px', width: '100%' }}>

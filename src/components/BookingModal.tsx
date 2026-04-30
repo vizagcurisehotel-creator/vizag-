@@ -191,19 +191,13 @@ const BookingModal = ({ room, initialDates, onClose, onSuccess }: BookingModalPr
                   </div>
                 </div>
 
-                <div style={{ marginTop: '20px', padding: '25px', background: 'rgba(212, 175, 55, 0.05)', border: '1px solid rgba(212, 175, 55, 0.1)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', fontSize: '0.8rem' }}>
-                    <span style={{ color: 'var(--luxury-pearl)', opacity: 0.6 }}>Experience Subtotal</span>
-                    <span style={{ color: 'var(--luxury-white)' }}>₹{totalAmount.toLocaleString()}</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700, color: 'var(--luxury-gold)', fontSize: '1.2rem' }}>
-                    <span style={{ fontFamily: 'var(--font-heading)' }}>Total Investment</span>
-                    <span>₹{totalAmount.toLocaleString()}</span>
-                  </div>
+                <div style={{ marginTop: '20px', padding: '25px', background: 'rgba(212, 175, 55, 0.05)', border: '1px solid rgba(212, 175, 55, 0.1)', textAlign: 'center' }}>
+                  <p style={{ color: 'var(--luxury-gold)', fontFamily: 'var(--font-heading)', fontSize: '1rem', marginBottom: '5px' }}>BESPOKE CONCIERGE SERVICE</p>
+                  <p style={{ color: 'var(--luxury-pearl)', opacity: 0.6, fontSize: '0.8rem' }}>Final arrangements and elite membership rates will be curated by your private concierge upon inquiry.</p>
                 </div>
 
                 <button type="submit" className="gold-btn" style={{ width: '100%', padding: '20px' }}>
-                  PROCEED TO PAYMENT
+                  SEND INQUIRY
                 </button>
               </form>
             </>

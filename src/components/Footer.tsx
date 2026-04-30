@@ -1,7 +1,7 @@
 "use client";
 import { Camera, Globe, MessageCircle, MapPin, Mail, Phone, Instagram, Facebook, Twitter } from 'lucide-react';
 
-const Footer = () => {
+const Footer = ({ onOpenInfo }: { onOpenInfo: (type: 'about' | 'contact' | 'terms' | 'privacy' | 'refund') => void }) => {
   return (
     <footer style={{ background: 'var(--luxury-black)', padding: '120px 5% 60px', color: 'var(--luxury-white)', borderTop: '1px solid var(--luxury-gold-muted)' }}>
       <div className="container">
@@ -22,7 +22,7 @@ const Footer = () => {
               The definitive destination for ultra-luxury hospitality. Where the legacy of the sea meets the pinnacle of modern architecture.
             </p>
             <div style={{ display: 'flex', gap: '20px' }}>
-              <a href="#" style={{ color: 'var(--luxury-gold)', opacity: 0.8 }}><Instagram size={20}/></a>
+              <a href="https://www.instagram.com/thevizagcruise?igsh=bnE3YncwMTYxeDBs" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--luxury-gold)', opacity: 0.8 }}><Instagram size={20}/></a>
               <a href="#" style={{ color: 'var(--luxury-gold)', opacity: 0.8 }}><Facebook size={20}/></a>
               <a href="#" style={{ color: 'var(--luxury-gold)', opacity: 0.8 }}><Twitter size={20}/></a>
             </div>
@@ -43,12 +43,11 @@ const Footer = () => {
           <div>
             <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--luxury-gold)', fontSize: '0.8rem', letterSpacing: '0.2em', marginBottom: '30px', textTransform: 'uppercase' }}>Information</h3>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '15px', color: 'var(--luxury-pearl)', fontSize: '0.9rem', opacity: 0.8 }}>
-              <li><a href="#about" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>About Us</a></li>
-              <li><a href="#pricing" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Pricing</a></li>
-              <li><a href="#contact" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Contact Us</a></li>
-              <li><a href="#terms" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Terms of Use</a></li>
-              <li><a href="#privacy" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Privacy Policy</a></li>
-              <li><a href="#refund" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Refund & Cancellation Policy</a></li>
+              <li><button onClick={() => onOpenInfo('about')} style={{ background: 'none', border: 'none', padding: 0, color: 'inherit', cursor: 'pointer', textAlign: 'left', transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>About Us</button></li>
+              <li><button onClick={() => onOpenInfo('contact')} style={{ background: 'none', border: 'none', padding: 0, color: 'inherit', cursor: 'pointer', textAlign: 'left', transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Contact Us</button></li>
+              <li><button onClick={() => onOpenInfo('terms')} style={{ background: 'none', border: 'none', padding: 0, color: 'inherit', cursor: 'pointer', textAlign: 'left', transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Terms of Use</button></li>
+              <li><button onClick={() => onOpenInfo('privacy')} style={{ background: 'none', border: 'none', padding: 0, color: 'inherit', cursor: 'pointer', textAlign: 'left', transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Privacy Policy</button></li>
+              <li><button onClick={() => onOpenInfo('refund')} style={{ background: 'none', border: 'none', padding: 0, color: 'inherit', cursor: 'pointer', textAlign: 'left', transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Refund & Cancellation Policy</button></li>
             </ul>
           </div>
 
@@ -62,11 +61,11 @@ const Footer = () => {
               </li>
               <li style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
                 <Phone size={18} color="var(--luxury-gold)" />
-                <span>+91 80 777 000 77</span>
+                <span>96693 11999</span>
               </li>
               <li style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
                 <Mail size={18} color="var(--luxury-gold)" />
-                <span>concierge@vizagcruise.com</span>
+                <span>vizagcurisehotel@gmail.com</span>
               </li>
             </ul>
           </div>

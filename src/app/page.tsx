@@ -19,6 +19,7 @@ import DigitalMenuModal from '../components/DigitalMenuModal';
 import BanquetInquiryModal from '../components/BanquetInquiryModal';
 import ConciergeBot from '../components/ConciergeBot';
 import BookNowButton from '../components/BookNowButton';
+import LegalModal from '../components/LegalModal';
 
 import { Room } from '../lib/db';
 import { Utensils, Calendar as CalendarIcon, Users, Sparkles } from 'lucide-react';
@@ -45,6 +46,7 @@ export default function Home() {
     adults: 2,
     children: 0
   });
+  const [legalModal, setLegalModal] = useState<'about' | 'contact' | 'terms' | 'privacy' | 'refund' | null>(null);
 
   const moreInfoData = {
     dining: {
@@ -260,7 +262,7 @@ export default function Home() {
             <AttractionsSection onShowMap={() => setShowMap(true)} />
           </div>
           </div>
-          <Footer />
+          <Footer onOpenInfo={(type) => setLegalModal(type)} />
         </main>
 
 
@@ -325,6 +327,8 @@ export default function Home() {
           if (action === 'map') setShowMap(true);
         }} 
       />
+
+      {legalModal && <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />}
 
       <div className="lg-hidden" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 900, padding: '10px', background: 'var(--luxury-black)', borderTop: '1px solid rgba(212, 175, 55, 0.3)' }}>
         <BookNowButton style={{ width: '100%', padding: '15px', fontSize: '1rem' }} />

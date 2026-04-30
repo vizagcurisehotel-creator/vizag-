@@ -218,8 +218,8 @@ const DigitalMenuModal = ({ onClose }: { onClose: () => void }) => {
                         <div style={{ fontSize: '0.7rem', color: 'var(--luxury-gold)', opacity: 0.6, letterSpacing: '0.1em' }}>SIGNATURE DISH</div>
                       </div>
                       <div style={{ flex: 1, borderBottom: '1px dotted rgba(255,255,255,0.1)', margin: '0 15px', marginBottom: '8px' }} />
-                      <div style={{ fontSize: '1.2rem', fontFamily: 'var(--font-heading)', color: 'var(--luxury-gold)' }}>
-                        ₹{item.price}
+                      <div style={{ fontSize: '1rem', fontFamily: 'var(--font-heading)', color: 'var(--luxury-gold)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                        Bespoke
                       </div>
                     </div>
                   ))}
@@ -238,7 +238,7 @@ const DigitalMenuModal = ({ onClose }: { onClose: () => void }) => {
         background: 'rgba(5,5,5,0.8)'
       }}>
         <div style={{ color: 'var(--luxury-pearl)', opacity: 0.4, fontSize: '0.65rem', letterSpacing: '0.3em', textTransform: 'uppercase' }}>
-          Prices are exclusive of applicable taxes & service charges
+          Menu curated daily • Final arrangements curated by your steward
         </div>
       </div>
     </div>

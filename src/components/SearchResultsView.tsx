@@ -154,20 +154,16 @@ const SearchResultsView = ({ rooms, globalDates, setGlobalDates, guests, setGues
                 <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '35px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                     <div>
-                      {room.original_price ? (room.original_price > room.price && (
-                        <div style={{ color: 'var(--luxury-pearl)', opacity: 0.3, fontSize: '1rem', textDecoration: 'line-through', marginBottom: '5px' }}>
-                          ₹{room.original_price.toLocaleString()}
-                        </div>
-                      )) : null}
-                      <div style={{ color: 'var(--luxury-gold)', fontSize: '2.4rem', fontFamily: 'var(--font-heading)', lineHeight: 1 }}>₹{room.price.toLocaleString()}</div>
-                      <div style={{ fontSize: '0.6rem', color: 'var(--luxury-pearl)', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '6px' }}>Per Enchanted Night</div>
+                      <div style={{ color: 'var(--luxury-gold)', fontSize: '1.5rem', fontFamily: 'var(--font-heading)', lineHeight: 1 }}>INQUIRY ONLY</div>
+                      <div style={{ fontSize: '0.6rem', color: 'var(--luxury-pearl)', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '6px' }}>Bespoke Membership Rates</div>
                     </div>
-                    <BookNowButton 
-                      roomType={room.name}
+                    <button 
+                      onClick={() => onBook(room)}
+                      className="gold-btn" 
                       style={{ padding: '18px 50px', fontSize: '0.75rem' }}
                     >
-                      Reserve Now
-                    </BookNowButton>
+                      Inquire Now
+                    </button>
                   </div>
                 </div>
               </div>

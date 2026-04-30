@@ -86,13 +86,13 @@ const ConciergeBot = ({ rooms, onAction }: { rooms: any[], onAction: (type: stri
           responseContent = "Wonderful. How shall we proceed? I can assist with a room reservation, a dining table, or an event inquiry.";
           responseOptions = ['Book a Room', 'Reserve a Table', 'Event Inquiry'];
         } else if (isRoom) {
-          const roomList = rooms.map(r => `${r.name} (from ₹${r.price})`).join(', ');
+          const roomList = rooms.map(r => r.name).join(', ');
           responseContent = getRandom([
-            `Our fleet of staterooms is curated for absolute tranquility: ${roomList}. Shall I prepare your reservation?`,
+            `Our fleet of staterooms is curated for absolute tranquility: ${roomList}. Shall I prepare your inquiry?`,
             `We have several private sanctuaries available: ${roomList}. Would you like to see more details?`,
             `From our Cozy Rooms to the Executive Suites: ${roomList}. Which one piques your interest today?`
           ]);
-          responseOptions = ['Reserve Now', 'Compare Staterooms'];
+          responseOptions = ['Inquire Now', 'Compare Staterooms'];
         } else if (isDining) {
           responseContent = getRandom([
             "The Admiral's Dining Room offers a bespoke 7-star culinary odyssey. I can secure your table or show you tonight's digital menu.",
