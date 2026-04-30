@@ -1,4 +1,4 @@
-// File: C:\Users\Home\Desktop\vizag cruise\src\app\api\rooms\route.ts
+// File: C:\Users\Home\Desktop\vizag cruise\vizag cruise\src\app\api\rooms\route.ts
 import * as entry from '../../../../../src/app/api/rooms/route.js'
 import type { NextRequest } from 'next/server.js'
 

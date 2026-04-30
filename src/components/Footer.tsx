@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer style={{ background: 'var(--luxury-black)', padding: '120px 5% 60px', color: 'var(--luxury-white)', borderTop: '1px solid var(--luxury-gold-muted)' }}>
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '80px', marginBottom: '80px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '80px', marginBottom: '80px' }}>
           
           {/* Brand Column */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -36,6 +36,19 @@ const Footer = () => {
               <li><a href="#restaurant" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Admiral's Dining</a></li>
               <li><a href="#banquet" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>The Grand Ballroom</a></li>
               <li><a href="#features" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Experiences</a></li>
+            </ul>
+          </div>
+
+          {/* Information Column */}
+          <div>
+            <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--luxury-gold)', fontSize: '0.8rem', letterSpacing: '0.2em', marginBottom: '30px', textTransform: 'uppercase' }}>Information</h3>
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: '15px', color: 'var(--luxury-pearl)', fontSize: '0.9rem', opacity: 0.8 }}>
+              <li><a href="#about" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>About Us</a></li>
+              <li><a href="#pricing" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Pricing</a></li>
+              <li><a href="#contact" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Contact Us</a></li>
+              <li><a href="#terms" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Terms of Use</a></li>
+              <li><a href="#privacy" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Privacy Policy</a></li>
+              <li><a href="#refund" style={{ transition: 'color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--luxury-gold)'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>Refund & Cancellation Policy</a></li>
             </ul>
           </div>
 
