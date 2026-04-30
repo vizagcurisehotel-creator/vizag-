@@ -18,7 +18,7 @@ import TableBookingModal from '../components/TableBookingModal';
 import DigitalMenuModal from '../components/DigitalMenuModal';
 import BanquetInquiryModal from '../components/BanquetInquiryModal';
 import ConciergeBot from '../components/ConciergeBot';
-
+import BookNowButton from '../components/BookNowButton';
 
 import { Room } from '../lib/db';
 import { Utensils, Calendar as CalendarIcon, Users, Sparkles } from 'lucide-react';
@@ -325,6 +325,10 @@ export default function Home() {
           if (action === 'map') setShowMap(true);
         }} 
       />
+
+      <div className="lg-hidden" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 900, padding: '10px', background: 'var(--luxury-black)', borderTop: '1px solid rgba(212, 175, 55, 0.3)' }}>
+        <BookNowButton style={{ width: '100%', padding: '15px', fontSize: '1rem' }} />
+      </div>
     </div>
 
   );

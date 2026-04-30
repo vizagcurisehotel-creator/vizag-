@@ -37,10 +37,13 @@ export async function POST(request: Request) {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
     
     const totalPrice = room.price * diffDays;
+    
+    const bookingId = `BOOK-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`;
 
     const { data: booking, error: bookingError } = await supabase
       .from('bookings')
       .insert([{
+        booking_id: bookingId,
         room_id: room.id,
         room_name: room.name,
         guest_name: body.guestName,
@@ -48,8 +51,9 @@ export async function POST(request: Request) {
         guest_phone: body.guestPhone,
         check_in: body.checkIn,
         check_out: body.checkOut,
-        status: 'Confirmed',
-        total_price: totalPrice
+        status: 'Pending',
+        total_price: totalPrice,
+        payment_screenshot: body.paymentScreenshot || null
       }])
       .select()
       .single();
@@ -62,3 +66,26 @@ export async function POST(request: Request) {
   }
 }
 
+export async function PATCH(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, status } = body;
+
+    if (!id || !status) {
+      return NextResponse.json({ error: 'Missing id or status' }, { status: 400 });
+    }
+
+    const { data: booking, error } = await supabase
+      .from('bookings')
+      .update({ status })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return NextResponse.json(booking);
+  } catch (error) {
+    console.error('Failed to update booking:', error);
+    return NextResponse.json({ error: 'Failed to update booking status' }, { status: 500 });
+  }
+}

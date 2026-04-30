@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Users, Bed, Maximize, ChevronRight, ArrowLeft, Star, ShieldCheck } from 'lucide-react';
 import { Room } from '../lib/db';
+import BookNowButton from './BookNowButton';
 
 interface SearchResultsViewProps {
   rooms: Room[];
@@ -161,13 +162,12 @@ const SearchResultsView = ({ rooms, globalDates, setGlobalDates, guests, setGues
                       <div style={{ color: 'var(--luxury-gold)', fontSize: '2.4rem', fontFamily: 'var(--font-heading)', lineHeight: 1 }}>₹{room.price.toLocaleString()}</div>
                       <div style={{ fontSize: '0.6rem', color: 'var(--luxury-pearl)', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '6px' }}>Per Enchanted Night</div>
                     </div>
-                    <button 
-                      onClick={() => onBook(room)}
-                      className="gold-btn" 
+                    <BookNowButton 
+                      roomType={room.name}
                       style={{ padding: '18px 50px', fontSize: '0.75rem' }}
                     >
                       Reserve Now
-                    </button>
+                    </BookNowButton>
                   </div>
                 </div>
               </div>

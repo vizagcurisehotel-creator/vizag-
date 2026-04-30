@@ -16,6 +16,7 @@ const GALLERY_IMAGES = [
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'rooms' | 'bookings' | 'dining' | 'events' | 'settings' | 'customers'>('dashboard');
+  const [bookingFilter, setBookingFilter] = useState<'All' | 'Pending' | 'Confirmed' | 'Rejected'>('All');
   const [restaurantPhoto, setRestaurantPhoto] = useState('/restaurant-main.png');
   const [customers, setCustomers] = useState<any[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -131,6 +132,19 @@ const AdminDashboard = () => {
       if (response.ok) fetchData();
     } catch (error) {
       console.error("Error deleting room", error);
+    }
+  };
+
+  const handleUpdateBookingStatus = async (id: string, status: string) => {
+    try {
+      const response = await fetch('/api/bookings', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status })
+      });
+      if (response.ok) fetchData();
+    } catch (error) {
+      console.error("Error updating booking status", error);
     }
   };
 
@@ -450,41 +464,76 @@ const AdminDashboard = () => {
 
           {activeTab === 'bookings' && (
             <div className="glass" style={{ padding: '40px' }}>
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '30px', fontFamily: 'var(--font-heading)', color: 'var(--luxury-gold)' }}>Voyage Manifest</h3>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+                <h3 style={{ fontSize: '1.2rem', fontFamily: 'var(--font-heading)', color: 'var(--luxury-gold)' }}>Voyage Manifest</h3>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  {['All', 'Pending', 'Confirmed', 'Rejected'].map(filter => (
+                    <button 
+                      key={filter}
+                      onClick={() => setBookingFilter(filter as any)}
+                      style={{ 
+                        padding: '6px 12px', 
+                        background: bookingFilter === filter ? 'var(--luxury-gold)' : 'transparent',
+                        color: bookingFilter === filter ? 'var(--luxury-black)' : 'var(--luxury-pearl)',
+                        border: '1px solid var(--luxury-gold)',
+                        fontSize: '0.7rem',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {filter}
+                    </button>
+                  ))}
+                </div>
+              </div>
               <div style={{ overflowX: 'auto' }}>
                 <table className="admin-table" style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid var(--glass-border)', color: 'var(--luxury-pearl)', opacity: 0.5, textTransform: 'uppercase', fontSize: '0.65rem', letterSpacing: '2px' }}>
-                      <th style={{ padding: '20px' }}>Guest Identity</th>
-                      <th style={{ padding: '20px' }}>Phone</th>
+                      <th style={{ padding: '20px' }}>ID / Guest Identity</th>
                       <th style={{ padding: '20px' }}>Sanctuary</th>
                       <th style={{ padding: '20px' }}>Voyage Window</th>
-                      <th style={{ padding: '20px' }}>Gross Revenue</th>
+                      <th style={{ padding: '20px' }}>Payment</th>
                       <th style={{ padding: '20px' }}>Status</th>
+                      <th style={{ padding: '20px' }}>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {bookings.length === 0 ? (
+                    {bookings.filter(b => bookingFilter === 'All' || b.status === bookingFilter).length === 0 ? (
                       <tr>
-                        <td colSpan={5} style={{ padding: '60px', textAlign: 'center', color: 'var(--luxury-pearl)', opacity: 0.5 }}>No active voyages documented in current manifest.</td>
+                        <td colSpan={6} style={{ padding: '60px', textAlign: 'center', color: 'var(--luxury-pearl)', opacity: 0.5 }}>No voyages documented in current manifest.</td>
                       </tr>
                     ) : (
-                      bookings.map((booking) => (
+                      bookings.filter(b => bookingFilter === 'All' || b.status === bookingFilter).map((booking) => (
                         <tr key={booking.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                           <td style={{ padding: '20px' }}>
+                            <div style={{ fontSize: '0.7rem', color: 'var(--luxury-gold)', marginBottom: '5px' }}>{booking.booking_id || 'Legacy Booking'}</div>
                             <div style={{ fontWeight: 600, color: 'var(--luxury-white)', fontSize: '1rem' }}>{booking.guest_name}</div>
-                            <div style={{ fontSize: '0.75rem', color: 'var(--luxury-pearl)', opacity: 0.5 }}>{booking.guest_email}</div>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--luxury-pearl)', opacity: 0.5 }}>{booking.guest_phone}</div>
                           </td>
-                          <td style={{ padding: '20px', color: 'var(--luxury-gold)' }}>{booking.guest_phone || 'N/A'}</td>
                           <td style={{ padding: '20px', color: 'var(--luxury-pearl)' }}>{booking.room_name}</td>
                           <td style={{ padding: '20px', color: 'var(--luxury-white)' }}>
                             <div style={{ fontSize: '0.9rem' }}>{new Date(booking.check_in).toLocaleDateString()} — {new Date(booking.check_out).toLocaleDateString()}</div>
                           </td>
-                          <td style={{ padding: '20px', fontWeight: 600, color: 'var(--luxury-gold)' }}>₹{booking.total_price.toLocaleString()}</td>
+                          <td style={{ padding: '20px' }}>
+                            <div style={{ fontWeight: 600, color: 'var(--luxury-gold)', marginBottom: '5px' }}>₹{booking.total_price.toLocaleString()}</div>
+                            {booking.payment_screenshot ? (
+                              <a href={booking.payment_screenshot} target="_blank" rel="noreferrer" style={{ fontSize: '0.7rem', color: '#4caf50', textDecoration: 'underline' }}>View Screenshot</a>
+                            ) : (
+                              <span style={{ fontSize: '0.7rem', color: 'var(--luxury-pearl)', opacity: 0.5 }}>No File</span>
+                            )}
+                          </td>
                           <td style={{ padding: '20px' }}>
                             <span style={{ padding: '8px 16px', border: '1px solid var(--luxury-gold)', color: 'var(--luxury-gold)', fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>
                               {booking.status}
                             </span>
+                          </td>
+                          <td style={{ padding: '20px' }}>
+                            {booking.status === 'Pending' && (
+                              <div style={{ display: 'flex', gap: '5px' }}>
+                                <button onClick={() => handleUpdateBookingStatus(booking.id, 'Confirmed')} style={{ background: '#4caf50', color: 'white', border: 'none', padding: '6px 10px', fontSize: '0.7rem', cursor: 'pointer' }}>Approve</button>
+                                <button onClick={() => handleUpdateBookingStatus(booking.id, 'Rejected')} style={{ background: '#ff4d4d', color: 'white', border: 'none', padding: '6px 10px', fontSize: '0.7rem', cursor: 'pointer' }}>Reject</button>
+                              </div>
+                            )}
                           </td>
                         </tr>
                       ))

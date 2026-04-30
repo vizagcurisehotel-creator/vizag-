@@ -15,6 +15,7 @@ export interface Room {
 
 export interface Booking {
   id: string;
+  booking_id: string;
   room_id: string;
   room_name: string;
   guest_name: string;
@@ -22,8 +23,9 @@ export interface Booking {
   guest_phone?: string;
   check_in: string;
   check_out: string;
-  status: 'Confirmed' | 'Pending' | 'Cancelled';
+  status: 'Confirmed' | 'Pending' | 'Cancelled' | 'Rejected';
   total_price: number;
+  payment_screenshot?: string;
   created_at: string;
 }
 

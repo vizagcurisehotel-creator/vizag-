@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { Menu, X, User, Globe, Phone, Calendar } from 'lucide-react';
+import BookNowButton from './BookNowButton';
 
 const Navbar = ({ currentUser, onOpenAuth, onGoProfile, onGoHome, onExplore }: { currentUser: any, onOpenAuth: () => void, onGoProfile: () => void, onGoHome: () => void, onExplore: () => void }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -136,14 +137,10 @@ const Navbar = ({ currentUser, onOpenAuth, onGoProfile, onGoHome, onExplore }: {
 
 
 
-        <button 
-          className="gold-btn" 
-          style={{ padding: '8px 25px', fontSize: '0.7rem' }}
-          onClick={onExplore}
-        >
+        <BookNowButton style={{ padding: '8px 25px', fontSize: '0.7rem' }}>
           <span className="mobile-hide">Reserve Now</span>
           <Calendar size={14} className="lg-hidden" />
-        </button>
+        </BookNowButton>
 
         <button 
           className="lg-hidden" 

@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { ArrowRight, Loader2, Sparkles } from 'lucide-react';
 import { Room } from '../lib/db';
 
+import BookNowButton from './BookNowButton';
+
 const RoomCard = ({ room, setBookingRoom }: { room: Room, setBookingRoom: any }) => {
   return (
     <div 
@@ -22,7 +24,6 @@ const RoomCard = ({ room, setBookingRoom }: { room: Room, setBookingRoom: any })
         const img = e.currentTarget.querySelector('img');
         if (img) img.style.transform = 'scale(1)';
       }}
-      onClick={() => setBookingRoom(room)}
     >
       <style jsx>{`
         @media (max-width: 768px) {
@@ -70,12 +71,11 @@ const RoomCard = ({ room, setBookingRoom }: { room: Room, setBookingRoom: any })
             <div style={{ fontSize: '0.6rem', color: 'var(--luxury-pearl)', opacity: 0.6, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Per Enchanted Night</div>
           </div>
         </div>
-        <button 
-          className="outline-btn" 
-          style={{ marginTop: '30px', width: '100%', borderColor: 'rgba(212, 175, 55, 0.3)', background: 'rgba(212, 175, 55, 0.05)' }}
-        >
-          Reserve This Suite
-        </button>
+        <div style={{ marginTop: '30px', width: '100%' }}>
+          <BookNowButton roomType={room.name} style={{ width: '100%', padding: '15px' }}>
+            Reserve This Suite
+          </BookNowButton>
+        </div>
       </div>
     </div>
   );
